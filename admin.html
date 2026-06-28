@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - AaraTech</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    padding:20px;
+}
+
+h1{
+    color:#0d6efd;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:30px;
+}
+
+table,th,td{
+    border:1px solid #ddd;
+}
+
+th,td{
+    padding:10px;
+    text-align:left;
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+}
+</style>
+
+</head>
+<body>
+
+<h1>AaraTech Admin Dashboard</h1>
+
+<h2>Contact Requests</h2>
+
+<table id="contactsTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Message</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<h2>Leads</h2>
+
+<table id="leadsTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Company</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script>
+
+async function loadContacts(){
+
+const response =
+await fetch("http://localhost:5000/api/contacts");
+
+const data =
+await response.json();
+
+const tbody =
+document.querySelector("#contactsTable tbody");
+
+tbody.innerHTML="";
+
+data.forEach(contact=>{
+
+tbody.innerHTML += `
+<tr>
+<td>${contact.id}</td>
+<td>${contact.name}</td>
+<td>${contact.email}</td>
+<td>${contact.message}</td>
+</tr>
+`;
+
+});
+
+}
+
+async function loadLeads(){
+
+const response =
+await fetch("http://localhost:5000/api/leads");
+
+const data =
+await response.json();
+
+const tbody =
+document.querySelector("#leadsTable tbody");
+
+tbody.innerHTML="";
+
+data.forEach(lead=>{
+
+tbody.innerHTML += `
+<tr>
+<td>${lead.id}</td>
+<td>${lead.name}</td>
+<td>${lead.email}</td>
+<td>${lead.phone}</td>
+<td>${lead.company}</td>
+</tr>
+`;
+
+});
+
+}
+
+loadContacts();
+loadLeads();
+
+</script>
+
+</body>
+</html>
